@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Love Match 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff4d6d,#ffb3c1,#ffe5ec);
+}
+
+/* WRAPPER */
+.wrapper{
+    display:flex;
+    width:720px;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* SIDES */
+.side{
+    flex:1;
+    padding:15px;
+    text-align:center;
+}
+
+.side.left{
+    border-right:1px solid #ffd1dc;
+    background:#fff0f3;
+}
+
+.side.right{
+    background:#fff7f9;
+}
+
+/* INPUT */
+input, select{
+    width:100%;
+    padding:7px;
+    margin:4px 0;
+    border:2px solid #ffb3c1;
+    border-radius:8px;
+    outline:none;
+    font-size:13px;
+}
+
+input:focus, select:focus{
+    border-color:#ff4d6d;
+}
+
+/* IMAGE */
+img{
+    width:100%;
+    height:110px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-top:5px;
+    border:2px solid #ffb3c1;
+}
+
+/* BUTTON */
+.button-container{
+    display:flex;
+    justify-content:center;
+    margin-top:15px;
+}
+
+button{
+    padding:10px 18px;
+    border:none;
+    background:#ff4d6d;
+    color:white;
+    font-size:14px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+    background:#e6004c;
+}
+
+/* RESULT */
+.result{
+    margin-top:15px;
+    text-align:center;
+    font-size:16px;
+}
+
+/* SOURCES */
+.sources{
+    margin-top:15px;
+    font-size:11px;
+    text-align:center;
+    padding:10px;
+    border-top:1px dashed #ffb3c1;
+}
+
+.sources h4{
+    color:#ff4d6d;
+    margin-bottom:5px;
+}
+
+.sources .links a{
+    display:inline-block;
+    margin:3px;
+    padding:5px 8px;
+    background:#ff4d6d;
+    color:white;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:10px;
+    transition:0.2s;
+}
+
+.sources .links a:hover{
+    transform:scale(1.1);
+    background:#e6004c;
+}
+
+/* LOADING */
+.loading{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(255,255,255,0.9);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+.spinner{
+    width:50px;
+    height:50px;
+    border:5px solid #ffd1dc;
+    border-top:5px solid #ff4d6d;
+    border-radius:50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    100%{transform:rotate(360deg);}
+}
+</style>
+</head>
+
+<body>
+
+<div>
+
+<div class="wrapper">
+
+    <!-- YOU -->
+    <div class="side left">
+        <h3>You 💖</h3>
+
+        <input type="text" id="name1" placeholder="Name">
+        <input type="number" id="age1" placeholder="Age">
+        <input type="text" id="place1" placeholder="From">
+
+        <select id="zodiac1">
+            <option>Zodiac</option>
+            <option>Aries</option><option>Taurus</option><option>Gemini</option>
+            <option>Cancer</option><option>Leo</option><option>Virgo</option>
+            <option>Libra</option><option>Scorpio</option><option>Sagittarius</option>
+            <option>Capricorn</option><option>Aquarius</option><option>Pisces</option>
+        </select>
+
+        <input type="file" onchange="loadImg(event,1)">
+        <img id="img1">
+    </div>
+
+    <!-- CRUSH -->
+    <div class="side right">
+        <h3>Crush 💘</h3>
+
+        <input type="text" id="name2" placeholder="Name">
+        <input type="number" id="age2" placeholder="Age">
+        <input type="text" id="place2" placeholder="From">
+
+        <select id="zodiac2">
+            <option>Zodiac</option>
+            <option>Aries</option><option>Taurus</option><option>Gemini</option>
+            <option>Cancer</option><option>Leo</option><option>Virgo</option>
+            <option>Libra</option><option>Scorpio</option><option>Sagittarius</option>
+            <option>Capricorn</option><option>Aquarius</option><option>Pisces</option>
+        </select>
+
+        <input type="file" onchange="loadImg(event,2)">
+        <img id="img2">
+    </div>
+
+</div>
+
+<div class="button-container">
+    <button onclick="calculateLove()">Check Love Percentage💖</button>
+</div>
+
+<div class="result" id="result"></div>
+
+<!-- 💖 ZODIAC SOURCES -->
+<div class="sources">
+    <h4>Zodiac Personality Sources 🔗</h4>
+    <p>Used as reference basis for compatibility scoring</p>
+
+    <div class="links">
+        <a href="https://www.astrology.com/zodiac-signs/aries" target="_blank">Aries</a>
+        <a href="https://www.astrology.com/zodiac-signs/taurus" target="_blank">Taurus</a>
+        <a href="https://www.astrology.com/zodiac-signs/gemini" target="_blank">Gemini</a>
+        <a href="https://www.astrology.com/zodiac-signs/cancer" target="_blank">Cancer</a>
+        <a href="https://www.astrology.com/zodiac-signs/leo" target="_blank">Leo</a>
+        <a href="https://www.astrology.com/zodiac-signs/virgo" target="_blank">Virgo</a>
+        <a href="https://www.astrology.com/zodiac-signs/libra" target="_blank">Libra</a>
+        <a href="https://www.astrology.com/zodiac-signs/scorpio" target="_blank">Scorpio</a>
+        <a href="https://www.astrology.com/zodiac-signs/sagittarius" target="_blank">Sagittarius</a>
+        <a href="https://www.astrology.com/zodiac-signs/capricorn" target="_blank">Capricorn</a>
+        <a href="https://www.astrology.com/zodiac-signs/aquarius" target="_blank">Aquarius</a>
+        <a href="https://www.astrology.com/zodiac-signs/pisces" target="_blank">Pisces</a>
+    </div>
+</div>
+
+</div>
+
+<!-- LOADING -->
+<div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Matching hearts... 💫</p>
+</div>
+
+<script>
+function loadImg(event,num){
+    let reader = new FileReader();
+    reader.onload = function(){
+        document.getElementById("img"+num).src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+function calculateLove(){
+    let n1 = document.getElementById("name1").value;
+    let n2 = document.getElementById("name2").value;
+
+    if(n1=="" || n2==""){
+        alert("Fill names muna 😅");
+        return;
+    }
+
+    document.getElementById("loading").style.display="flex";
+
+    setTimeout(()=>{
+
+        document.getElementById("loading").style.display="none";
+
+        let percent = 70 + Math.floor(Math.random()*31); // 💖 70–100%
+
+        document.getElementById("result").innerHTML =
+        `💖 <b>${n1}</b> + <b>${n2}</b><br>
+        Love Match: <b>${percent}%</b> 💘<br>
+        <i>"Destined connection ✨"</i>`;
+
+    },1800);
+}
+</script>
+
+</body>
+</html>
